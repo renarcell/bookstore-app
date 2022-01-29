@@ -7,6 +7,7 @@ export default function ErrorIndicator(props) {
         <div className="error-indicator">
             <DoNotDisturbAltOutlinedIcon/>
             <div>Something went wrong...</div>
+			<div className="details">Details: {props.details}</div>
         </div>
     );
 }

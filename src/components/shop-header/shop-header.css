@@ -1,0 +1,33 @@
+.shop-header {
+	margin-top: 8px;
+}
+
+.shop-header .logo {
+	width: 50px;
+}
+.shop-header > *, .cart-amount > * {
+	display: inline-block;
+}
+
+.header-menu {
+	list-style-type: none;
+}
+
+.header-menu-item {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.header-menu-item > * {
+	text-decoration: none;
+	font-size: 26px;
+	color: black;
+}
+
+.cart-amount .icon {
+	font-size: 24px;
+}
+
+.cart-amount .desc {
+	font-size: 22px;
+}

@@ -1,6 +1,6 @@
 export default class BookstoreService {
-    getBooks = async () => {
-        return [
+    getBooks = () => {
+		const books = [
             {
                 id: 1,
                 title: "Harry Potter and the Philosopher's Stone Deluxe Illustrated Slipcase Edition",
@@ -37,6 +37,16 @@ export default class BookstoreService {
                 author: "Yuval Noah Harari",
                 url: "https://www.britishbook.ua/detail/sapiens-a-brief-history-of-humankind/",
             },
-        ]
+        ];
+		return new Promise((recive, reject) => {
+			setTimeout(() => {
+				const rnd = Math.random();
+				if (rnd < 0.75) {
+					recive(books);
+				} else {
+					reject(new Error('Error loading data!'));
+				}
+			}, 700);
+		});
     } 
 }
