@@ -2,6 +2,7 @@ import './cart-table.css';
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { increaseCountInCart, decreaseCountInCart, deleteBookInCart } from '../../actions/actions';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,8 +14,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-function CartTable({ cartBooks }) {
-	function CartTableRow({ title, count, price }, idx) {
+function CartTable({ cartBooks, increaseCountInCart, decreaseCountInCart, deleteBookInCart }) {
+	function CartTableRow({ id, title, count, total }, idx) {
 		return (
 		<TableRow
 		key={ idx }
@@ -22,15 +23,15 @@ function CartTable({ cartBooks }) {
 			<TableCell component="th" scope="row">{ idx + 1 }</TableCell>
 			<TableCell align="left">{ title }</TableCell>
 			<TableCell align="right">{ count }</TableCell>
-			<TableCell align="right">{ price }</TableCell>
+			<TableCell align="right">{ total }</TableCell>
 			<TableCell align="right">
-				<button className="action-button action-add">
+				<button className="action-button action-add" onClick={ () => increaseCountInCart(id) }>
 					<AddCircleIcon/>
 				</button>
-				<button className="action-button action-remove">
+				<button className="action-button action-remove" onClick={ () => decreaseCountInCart(id) }>
 					<RemoveCircleIcon/>
 				</button>
-				<button className="action-button action-delete">
+				<button className="action-button action-delete" onClick={ () => deleteBookInCart(id) }>
 					<DeleteIcon/>
 				</button>
 			</TableCell>
@@ -46,7 +47,7 @@ function CartTable({ cartBooks }) {
 						<TableCell>#</TableCell>
 						<TableCell align="left">Item</TableCell>
 						<TableCell align="right">Count</TableCell>
-						<TableCell align="right">Price</TableCell>
+						<TableCell align="right">Total price</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
@@ -64,5 +65,11 @@ const mapStateToProps = ({cartBooks}) => {
 	}
 }
 
+const mapDispatchToProps = {
+	increaseCountInCart, 
+	decreaseCountInCart,
+	deleteBookInCart,
+}
 
-export default connect(mapStateToProps)(CartTable);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartTable);

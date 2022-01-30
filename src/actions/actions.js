@@ -18,12 +18,34 @@ const fetchBooksFailure = (error) => {
 	}
 };
 
-export const addBookToCart = (item) => {
+export const addBookToCart = (id) => {
 	return {
 		type: "ADD_BOOK_TO_CART",
-		payload: item,
+		payload: id,
 	};
 }
+
+export const increaseCountInCart = (id) => {
+	return {
+		type: "INCREASE_COUNT_IN_CART",
+		payload: id,
+	};
+}
+
+export const decreaseCountInCart = (id) => {
+	return {
+		type: "DECREASE_COUNT_IN_CART",
+		payload: id,
+	};
+}
+
+export const deleteBookInCart = (id) => {
+	return {
+		type: "DELETE_BOOK_IN_CART",
+		payload: id,
+	};
+}
+
 
 export const fetchBooks = (dispatch, bookstoreService) => () => {
 	dispatch(fetchBooksRequest());
