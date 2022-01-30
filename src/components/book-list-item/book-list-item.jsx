@@ -2,11 +2,10 @@ import React from 'react';
 import './book-list-item.css';
 import BookCard from '../book-card/book-card';
 
-export default function BookListItem({ book }) {
-	const { id, title, author } = book;
+export default function BookListItem({book, addBookToCart}) {
 	return (
-		<li className="book-list-item" key={id}>
-			<BookCard title={title} author={author}/>
+		<li className="book-list-item" key={book.id}>
+			<BookCard {...book} addBookToCart={() => addBookToCart(book)}/>
 		</li>
 	);
 };

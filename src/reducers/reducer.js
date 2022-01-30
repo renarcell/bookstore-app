@@ -1,16 +1,10 @@
 
-function createData(name, count, price, actions) {
-	return { name, count, price, actions };
+function createData(title, count, price, actions) {
+	return { title, count, price, actions };
   }
 const initialStore = {
     books: [],
-	cartBooks: [
-		createData('Frozen yoghurt', 159, 6.0, 24),
-		createData('Ice cream sandwich', 237, 9.0, 37),
-		createData('Eclair', 262, 16.0, 24),
-		createData('Cupcake', 305, 3.7, 67),
-		createData('Gingerbread', 356, 16.0, 49),
-	  ],
+	cartBooks: [],
 	loading: true,
 	error: null,
 }
@@ -36,9 +30,23 @@ export default function reducer(store = initialStore, action) {
 				error: action.payload.message,
 			};
 		case "ADD_BOOK_TO_CART":
+			const { id, price } = action.payload;
+			if (store.cartBooks.find(book => id === book.id)) {
+				return {
+					...store, 
+					cartBooks: store.cartBooks.map(book => {
+						if (id === book.id) {
+							return {...book, count: book.count + 1, price: book.price + price};
+						} else {
+							return {...book};
+						}
+						
+					}),
+				};
+			}
 			return {
 				...store, 
-				cartBooks: [...store.cartBooks, action.payload]
+				cartBooks: [...store.cartBooks, {...action.payload, count: 1}]
 			};
 
         default:

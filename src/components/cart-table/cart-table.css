@@ -1,0 +1,23 @@
+.action-button {
+	background-color: rgba(0, 0, 0, 0);
+	border: 1px solid;
+	border-radius: 4px;
+	aspect-ratio: 1 / 1;
+	margin: 0 5px;
+}
+.action-button:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	filter: brightness(0.7);
+}
+
+.action-add {
+	color: green;
+}
+
+.action-remove {
+	color: yellowgreen;
+}
+
+.action-delete {
+	color: rgb(248, 91, 91);
+}

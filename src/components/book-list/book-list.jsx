@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import BookListItem from '../book-list-item/book-list-item';
 import { compose } from "redux";
 import { connect } from 'react-redux';
-import { fetchBooks } from '../../actions/actions';
+import { fetchBooks, addBookToCart } from '../../actions/actions';
 import { withBookstoreService } from '../../hoc-helpers';
 import Spinner from '../spinner/spinner';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import './book-list.css';
 
-function BookList({books, loading, error, fetchBooks}) {
+function BookList({books, loading, error, addBookToCart, fetchBooks}) {
 	useEffect(() => {
 		fetchBooks();
 	}, [ fetchBooks ]);
@@ -34,7 +34,7 @@ function BookList({books, loading, error, fetchBooks}) {
 			{
 				books.map((book) => {
 				  return (
-					<BookListItem key={book.id} book={book}/>
+					<BookListItem key={book.id} book={book} addBookToCart={addBookToCart}/>
 				  )
 				})
 			}
@@ -59,6 +59,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
 	return {
 		fetchBooks: fetchBooks(dispatch, props.bookstoreService),
+		addBookToCart: (item) => dispatch(addBookToCart(item)),
 	};
 }
 
