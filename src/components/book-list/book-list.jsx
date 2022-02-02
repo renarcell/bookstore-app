@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import BookListItem from '../book-list-item/book-list-item';
-import { compose } from "redux";
+import BookCard from '../book-card/book-card';
+import { bindActionCreators, compose } from "redux";
 import { connect } from 'react-redux';
 import { fetchBooks, addBookToCart } from '../../actions/actions';
 import { withBookstoreService } from '../../hoc-helpers';
@@ -8,7 +8,7 @@ import Spinner from '../spinner/spinner';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import './book-list.css';
 
-function BookList({books, loading, error, addBookToCart, fetchBooks}) {
+function BookListContainer({ books, loading, error, addBookToCart, fetchBooks }) {
 	useEffect(() => {
 		fetchBooks();
 	}, [ fetchBooks ]);
@@ -28,19 +28,24 @@ function BookList({books, loading, error, addBookToCart, fetchBooks}) {
 			</ul>
 		);
 	}
+	return <BookList books={books} addBookToCart={addBookToCart}/>;
+};
 
+function BookList({ books, addBookToCart }) {
 	return (
 		<ul className="book-list">
 			{
 				books.map((book) => {
-				  return (
-					<BookListItem key={book.id} book={book} addBookToCart={addBookToCart}/>
-				  )
+					return (
+						<li className="book-list-item" key={book.id}>
+							<BookCard {...book} addBookToCart={() => addBookToCart(book.id)}/>
+						</li>
+					)
 				})
 			}
 		</ul>
 	);
-};
+}
 
 const mapMethodsToProps = (service) => {
 	return {
@@ -48,24 +53,25 @@ const mapMethodsToProps = (service) => {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({bookList: {books, loading, error}}) => {
 	return {
-		books: state.books,
-		loading: state.loading,
-		error: state.error,
+		books,
+		loading,
+		error,
 	}
 }
 
 const mapDispatchToProps = (dispatch, props) => {
-	return {
-		fetchBooks: fetchBooks(dispatch, props.bookstoreService),
-		addBookToCart: (item) => dispatch(addBookToCart(item)),
-	};
+
+	return bindActionCreators({
+		fetchBooks: fetchBooks(props.bookstoreService),
+		addBookToCart: addBookToCart,
+	}, dispatch);
 }
 
 export default compose(
 	withBookstoreService(),
 	connect(mapStateToProps, mapDispatchToProps),
-)(BookList);
+)(BookListContainer);
 
 

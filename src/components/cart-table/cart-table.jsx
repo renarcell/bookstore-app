@@ -38,7 +38,6 @@ function CartTable({ cartBooks, increaseCountInCart, decreaseCountInCart, delete
 		  </TableRow>
 		);
 	}
-
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -59,14 +58,14 @@ function CartTable({ cartBooks, increaseCountInCart, decreaseCountInCart, delete
   );
 }
 
-const mapStateToProps = ({cartBooks}) => {
+const mapStateToProps = ({cartList: { cartBooks }}) => {
 	return {
 		cartBooks,
 	}
 }
 
 const mapDispatchToProps = {
-	increaseCountInCart, 
+	increaseCountInCart,
 	decreaseCountInCart,
 	deleteBookInCart,
 }

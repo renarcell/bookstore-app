@@ -47,7 +47,14 @@ export const deleteBookInCart = (id) => {
 }
 
 
-export const fetchBooks = (dispatch, bookstoreService) => () => {
+export const fetchBooksOld = (dispatch, bookstoreService) => () => {
+	dispatch(fetchBooksRequest());
+	bookstoreService.getBooks()
+	.then(data => dispatch(fetchBooksSuccess(data))) 
+	.catch(err => dispatch(fetchBooksFailure(err)));
+};
+
+export const fetchBooks = (bookstoreService) => () => (dispatch) => {
 	dispatch(fetchBooksRequest());
 	bookstoreService.getBooks()
 	.then(data => dispatch(fetchBooksSuccess(data)))
